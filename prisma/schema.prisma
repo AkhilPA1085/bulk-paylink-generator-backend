@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum BulkJobStatus{
+  UPLOADED
+  PROCESSING
+  COMPLETED
+  COMPLETED_WITH_ERRORS
+  FAILED
+}
+
+enum PaymentLinkStatus{
+  PENDING
+  PROCESSING
+  SUCCESS
+  FAILED
+}
+
+model BulkJob{
+  id String @id @default(cuid())
+  merchantId String
+  fileName String
+  status BulkJobStatus @default(UPLOADED)
+
+  totalRecords Int @default(0)
+  processedRecords Int @default(0)
+  successfulRecords Int @default(0)
+  failedRecords Int @default(0)
+
+  createdAt DateTime @default(now())
+  completedAt DateTime?
+
+  paymentlinks Paymentlink[]
+
+  @@index([merchantId])
+  @@index([status])
+}
+
+model Paymentlink{
+  id String @id @default(cuid())
+  bulkJobId String
+
+  idempotencyKey String @unique
+
+  customerName String
+  customerEmail String
+
+  amount Decimal @db.Decimal(18,2)
+  currency String @db.VarChar(3)
+
+  status PaymentLinkStatus @default(PENDING)
+
+  paymentUrl String?
+  errorMessage String?
+
+  createdAt DateTime @default(now())
+
+  bulkJob BulkJob @relation(fields: [bulkJobId], references: [id], onDelete: Cascade)
+
+  @@index([bulkJobId])
+  @@index([status])
+}
