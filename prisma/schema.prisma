@@ -37,6 +37,7 @@ model BulkJob{
   completedAt DateTime?
 
   paymentlinks Paymentlink[]
+  failedRows   FailedPaymentLink[]
 
   @@index([merchantId])
   @@index([status])
@@ -65,4 +66,18 @@ model Paymentlink{
 
   @@index([bulkJobId])
   @@index([status])
+}
+
+model FailedPaymentLink{
+  id String @id @default(cuid())
+  bulkJobId String
+  rowNumber Int
+  rowData Json
+  errorMessage String
+  createdAt DateTime @default(now())
+
+  bulkJob BulkJob @relation(fields:[bulkJobId], references:[id], onDelete:Cascade)
+
+  @@unique([bulkJobId, rowNumber])
+  @@index([bulkJobId])
 }

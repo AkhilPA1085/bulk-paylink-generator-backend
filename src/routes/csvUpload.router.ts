@@ -3,20 +3,16 @@ import multer from "multer";
 import { parse } from "csv-parse/sync";
 import prisma from "../lib/prisma.js";
 import { processPaymentLinks } from "../workers/paymentlink.worker.js";
+import { validateCsvUpload } from "../middlewares/validateCsvUpload.js";
+import type { PaymentLinkCsvRow } from "../types/paymentLink.js";
 
 const router = Router();
 const upload = multer({
   storage: multer?.memoryStorage(),
 });
 
-type PaymentLinkCsvRow = {
-  customerName: string;
-  customerEmail: string;
-  amount: string;
-  currency: string;
-};
 
-router.post("/", upload.single("file"), async (req, res) => {
+router.post("/", upload.single("file"), validateCsvUpload, async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({

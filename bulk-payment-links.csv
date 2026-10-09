@@ -2,4 +2,4 @@ customerName,customerEmail,amount,currency
 John Doe,john@example.com,500,INR
 Jane Doe,jane@example.com,750,INR
 Bob Smith,bob@example.com,1000,INR
-Alice Thomas,alice@example.com,250,INR
+Alice Thomas,alice@example.com,INVALID_AMOUNT,INR

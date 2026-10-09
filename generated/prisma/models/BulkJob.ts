@@ -269,6 +269,7 @@ export type BulkJobWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"BulkJob"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"BulkJob"> | Date | string | null
   paymentlinks?: Prisma.PaymentlinkListRelationFilter
+  failedRows?: Prisma.FailedPaymentLinkListRelationFilter
 }
 
 export type BulkJobOrderByWithRelationInput = {
@@ -283,6 +284,7 @@ export type BulkJobOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentlinks?: Prisma.PaymentlinkOrderByRelationAggregateInput
+  failedRows?: Prisma.FailedPaymentLinkOrderByRelationAggregateInput
 }
 
 export type BulkJobWhereUniqueInput = Prisma.AtLeast<{
@@ -300,6 +302,7 @@ export type BulkJobWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"BulkJob"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"BulkJob"> | Date | string | null
   paymentlinks?: Prisma.PaymentlinkListRelationFilter
+  failedRows?: Prisma.FailedPaymentLinkListRelationFilter
 }, "id">
 
 export type BulkJobOrderByWithAggregationInput = {
@@ -348,6 +351,7 @@ export type BulkJobCreateInput = {
   createdAt?: Date | string
   completedAt?: Date | string | null
   paymentlinks?: Prisma.PaymentlinkCreateNestedManyWithoutBulkJobInput
+  failedRows?: Prisma.FailedPaymentLinkCreateNestedManyWithoutBulkJobInput
 }
 
 export type BulkJobUncheckedCreateInput = {
@@ -362,6 +366,7 @@ export type BulkJobUncheckedCreateInput = {
   createdAt?: Date | string
   completedAt?: Date | string | null
   paymentlinks?: Prisma.PaymentlinkUncheckedCreateNestedManyWithoutBulkJobInput
+  failedRows?: Prisma.FailedPaymentLinkUncheckedCreateNestedManyWithoutBulkJobInput
 }
 
 export type BulkJobUpdateInput = {
@@ -376,6 +381,7 @@ export type BulkJobUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentlinks?: Prisma.PaymentlinkUpdateManyWithoutBulkJobNestedInput
+  failedRows?: Prisma.FailedPaymentLinkUpdateManyWithoutBulkJobNestedInput
 }
 
 export type BulkJobUncheckedUpdateInput = {
@@ -390,6 +396,7 @@ export type BulkJobUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paymentlinks?: Prisma.PaymentlinkUncheckedUpdateManyWithoutBulkJobNestedInput
+  failedRows?: Prisma.FailedPaymentLinkUncheckedUpdateManyWithoutBulkJobNestedInput
 }
 
 export type BulkJobCreateManyInput = {
@@ -527,6 +534,20 @@ export type BulkJobUpdateOneRequiredWithoutPaymentlinksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BulkJobUpdateToOneWithWhereWithoutPaymentlinksInput, Prisma.BulkJobUpdateWithoutPaymentlinksInput>, Prisma.BulkJobUncheckedUpdateWithoutPaymentlinksInput>
 }
 
+export type BulkJobCreateNestedOneWithoutFailedRowsInput = {
+  create?: Prisma.XOR<Prisma.BulkJobCreateWithoutFailedRowsInput, Prisma.BulkJobUncheckedCreateWithoutFailedRowsInput>
+  connectOrCreate?: Prisma.BulkJobCreateOrConnectWithoutFailedRowsInput
+  connect?: Prisma.BulkJobWhereUniqueInput
+}
+
+export type BulkJobUpdateOneRequiredWithoutFailedRowsNestedInput = {
+  create?: Prisma.XOR<Prisma.BulkJobCreateWithoutFailedRowsInput, Prisma.BulkJobUncheckedCreateWithoutFailedRowsInput>
+  connectOrCreate?: Prisma.BulkJobCreateOrConnectWithoutFailedRowsInput
+  upsert?: Prisma.BulkJobUpsertWithoutFailedRowsInput
+  connect?: Prisma.BulkJobWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BulkJobUpdateToOneWithWhereWithoutFailedRowsInput, Prisma.BulkJobUpdateWithoutFailedRowsInput>, Prisma.BulkJobUncheckedUpdateWithoutFailedRowsInput>
+}
+
 export type BulkJobCreateWithoutPaymentlinksInput = {
   id?: string
   merchantId: string
@@ -538,6 +559,7 @@ export type BulkJobCreateWithoutPaymentlinksInput = {
   failedRecords?: number
   createdAt?: Date | string
   completedAt?: Date | string | null
+  failedRows?: Prisma.FailedPaymentLinkCreateNestedManyWithoutBulkJobInput
 }
 
 export type BulkJobUncheckedCreateWithoutPaymentlinksInput = {
@@ -551,6 +573,7 @@ export type BulkJobUncheckedCreateWithoutPaymentlinksInput = {
   failedRecords?: number
   createdAt?: Date | string
   completedAt?: Date | string | null
+  failedRows?: Prisma.FailedPaymentLinkUncheckedCreateNestedManyWithoutBulkJobInput
 }
 
 export type BulkJobCreateOrConnectWithoutPaymentlinksInput = {
@@ -580,6 +603,7 @@ export type BulkJobUpdateWithoutPaymentlinksInput = {
   failedRecords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedRows?: Prisma.FailedPaymentLinkUpdateManyWithoutBulkJobNestedInput
 }
 
 export type BulkJobUncheckedUpdateWithoutPaymentlinksInput = {
@@ -593,6 +617,79 @@ export type BulkJobUncheckedUpdateWithoutPaymentlinksInput = {
   failedRecords?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedRows?: Prisma.FailedPaymentLinkUncheckedUpdateManyWithoutBulkJobNestedInput
+}
+
+export type BulkJobCreateWithoutFailedRowsInput = {
+  id?: string
+  merchantId: string
+  fileName: string
+  status?: $Enums.BulkJobStatus
+  totalRecords?: number
+  processedRecords?: number
+  successfulRecords?: number
+  failedRecords?: number
+  createdAt?: Date | string
+  completedAt?: Date | string | null
+  paymentlinks?: Prisma.PaymentlinkCreateNestedManyWithoutBulkJobInput
+}
+
+export type BulkJobUncheckedCreateWithoutFailedRowsInput = {
+  id?: string
+  merchantId: string
+  fileName: string
+  status?: $Enums.BulkJobStatus
+  totalRecords?: number
+  processedRecords?: number
+  successfulRecords?: number
+  failedRecords?: number
+  createdAt?: Date | string
+  completedAt?: Date | string | null
+  paymentlinks?: Prisma.PaymentlinkUncheckedCreateNestedManyWithoutBulkJobInput
+}
+
+export type BulkJobCreateOrConnectWithoutFailedRowsInput = {
+  where: Prisma.BulkJobWhereUniqueInput
+  create: Prisma.XOR<Prisma.BulkJobCreateWithoutFailedRowsInput, Prisma.BulkJobUncheckedCreateWithoutFailedRowsInput>
+}
+
+export type BulkJobUpsertWithoutFailedRowsInput = {
+  update: Prisma.XOR<Prisma.BulkJobUpdateWithoutFailedRowsInput, Prisma.BulkJobUncheckedUpdateWithoutFailedRowsInput>
+  create: Prisma.XOR<Prisma.BulkJobCreateWithoutFailedRowsInput, Prisma.BulkJobUncheckedCreateWithoutFailedRowsInput>
+  where?: Prisma.BulkJobWhereInput
+}
+
+export type BulkJobUpdateToOneWithWhereWithoutFailedRowsInput = {
+  where?: Prisma.BulkJobWhereInput
+  data: Prisma.XOR<Prisma.BulkJobUpdateWithoutFailedRowsInput, Prisma.BulkJobUncheckedUpdateWithoutFailedRowsInput>
+}
+
+export type BulkJobUpdateWithoutFailedRowsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  merchantId?: Prisma.StringFieldUpdateOperationsInput | string
+  fileName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumBulkJobStatusFieldUpdateOperationsInput | $Enums.BulkJobStatus
+  totalRecords?: Prisma.IntFieldUpdateOperationsInput | number
+  processedRecords?: Prisma.IntFieldUpdateOperationsInput | number
+  successfulRecords?: Prisma.IntFieldUpdateOperationsInput | number
+  failedRecords?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentlinks?: Prisma.PaymentlinkUpdateManyWithoutBulkJobNestedInput
+}
+
+export type BulkJobUncheckedUpdateWithoutFailedRowsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  merchantId?: Prisma.StringFieldUpdateOperationsInput | string
+  fileName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumBulkJobStatusFieldUpdateOperationsInput | $Enums.BulkJobStatus
+  totalRecords?: Prisma.IntFieldUpdateOperationsInput | number
+  processedRecords?: Prisma.IntFieldUpdateOperationsInput | number
+  successfulRecords?: Prisma.IntFieldUpdateOperationsInput | number
+  failedRecords?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentlinks?: Prisma.PaymentlinkUncheckedUpdateManyWithoutBulkJobNestedInput
 }
 
 
@@ -602,10 +699,12 @@ export type BulkJobUncheckedUpdateWithoutPaymentlinksInput = {
 
 export type BulkJobCountOutputType = {
   paymentlinks: number
+  failedRows: number
 }
 
 export type BulkJobCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   paymentlinks?: boolean | BulkJobCountOutputTypeCountPaymentlinksArgs
+  failedRows?: boolean | BulkJobCountOutputTypeCountFailedRowsArgs
 }
 
 /**
@@ -625,6 +724,13 @@ export type BulkJobCountOutputTypeCountPaymentlinksArgs<ExtArgs extends runtime.
   where?: Prisma.PaymentlinkWhereInput
 }
 
+/**
+ * BulkJobCountOutputType without action
+ */
+export type BulkJobCountOutputTypeCountFailedRowsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FailedPaymentLinkWhereInput
+}
+
 
 export type BulkJobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -638,6 +744,7 @@ export type BulkJobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   completedAt?: boolean
   paymentlinks?: boolean | Prisma.BulkJob$paymentlinksArgs<ExtArgs>
+  failedRows?: boolean | Prisma.BulkJob$failedRowsArgs<ExtArgs>
   _count?: boolean | Prisma.BulkJobCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["bulkJob"]>
 
@@ -683,6 +790,7 @@ export type BulkJobSelectScalar = {
 export type BulkJobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "merchantId" | "fileName" | "status" | "totalRecords" | "processedRecords" | "successfulRecords" | "failedRecords" | "createdAt" | "completedAt", ExtArgs["result"]["bulkJob"]>
 export type BulkJobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   paymentlinks?: boolean | Prisma.BulkJob$paymentlinksArgs<ExtArgs>
+  failedRows?: boolean | Prisma.BulkJob$failedRowsArgs<ExtArgs>
   _count?: boolean | Prisma.BulkJobCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BulkJobIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -692,6 +800,7 @@ export type $BulkJobPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "BulkJob"
   objects: {
     paymentlinks: Prisma.$PaymentlinkPayload<ExtArgs>[]
+    failedRows: Prisma.$FailedPaymentLinkPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1099,6 +1208,7 @@ readonly fields: BulkJobFieldRefs;
 export interface Prisma__BulkJobClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   paymentlinks<T extends Prisma.BulkJob$paymentlinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BulkJob$paymentlinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentlinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  failedRows<T extends Prisma.BulkJob$failedRowsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BulkJob$failedRowsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FailedPaymentLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1552,6 +1662,30 @@ export type BulkJob$paymentlinksArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.PaymentlinkScalarFieldEnum | Prisma.PaymentlinkScalarFieldEnum[]
+}
+
+/**
+ * BulkJob.failedRows
+ */
+export type BulkJob$failedRowsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FailedPaymentLink
+   */
+  select?: Prisma.FailedPaymentLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FailedPaymentLink
+   */
+  omit?: Prisma.FailedPaymentLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FailedPaymentLinkInclude<ExtArgs> | null
+  where?: Prisma.FailedPaymentLinkWhereInput
+  orderBy?: Prisma.FailedPaymentLinkOrderByWithRelationInput | Prisma.FailedPaymentLinkOrderByWithRelationInput[]
+  cursor?: Prisma.FailedPaymentLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FailedPaymentLinkScalarFieldEnum | Prisma.FailedPaymentLinkScalarFieldEnum[]
 }
 
 /**
