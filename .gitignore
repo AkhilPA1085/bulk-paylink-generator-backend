@@ -15,3 +15,8 @@ npm-debug.log*
 .DS_Store
 .vscode/
 .idea/
+
+.agents/
+.claude/
+.cursor/
+.devin/

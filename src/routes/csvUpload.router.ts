@@ -2,6 +2,7 @@ import { Router } from "express";
 import multer from "multer";
 import { parse } from "csv-parse/sync";
 import prisma from "../lib/prisma.js";
+import { processPaymentLinks } from "../workers/paymentlink.worker.js";
 
 const router = Router();
 const upload = multer({
@@ -42,57 +43,18 @@ router.post("/", upload.single("file"), async (req, res) => {
       },
     });
 
-    let successfulRecords = 0;
-    let failedRecords = 0;
-
-    for (let i = 0; i < records?.length; i++) {
-      const row = records[i];
-      if (!row) {
-        continue;
-      }
-      try {
-        await prisma.paymentlink.create({
-          data: {
-            bulkJobId: bulkJob.id,
-            idempotencyKey: `${bulkJob?.id}-row-${i + 1}`,
-            customerName: row.customerName,
-            customerEmail: row.customerEmail,
-            amount: row.amount,
-            currency: row.currency,
-          },
-        });
-        successfulRecords++;
-      } catch (error) {
-        console.error(`Failed to generate paylink for row ${i + 1}`);
-        failedRecords++;
-      }
-    }
-
-    let finalStatus: "COMPLETED" | "COMPLETED_WITH_ERRORS";
-
-    if (failedRecords === 0) {
-      finalStatus = "COMPLETED";
-    } else {
-      finalStatus = "COMPLETED_WITH_ERRORS";
-    }
-
-    const completedJob = await prisma.bulkJob.update({
-      where: {
-        id: bulkJob.id,
-      },
-      data: {
-        status: finalStatus,
-        processedRecords: successfulRecords + failedRecords,
-        successfulRecords,
-        failedRecords,
-        completedAt: new Date(),
-      },
+    void processPaymentLinks(bulkJob.id, records).catch((error) => {
+      console.error(`Unexpected worker error for job ${bulkJob.id}:`, error);
     });
 
-    return res.status(200).json({
+    return res.status(202).json({
       error: false,
-      message: "Bulk payment links processed successfully",
-      data: completedJob,
+      message: "Bulk payment link processing started",
+      data: {
+        jobId: bulkJob.id,
+        status: bulkJob.status,
+        totalRecords: bulkJob.totalRecords,
+      },
     });
   } catch (error) {
     console.error("CSV Upload Error", error);
