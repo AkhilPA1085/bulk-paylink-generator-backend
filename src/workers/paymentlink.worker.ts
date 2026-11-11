@@ -34,6 +34,7 @@ export async function processPaymentLinks(
   let successfulRecords = 0;
   let failedRecords = 0;
   const batchSize = 100;
+  const concurrencyLimit = 5;
 
   try {
     for (let start = 0; start < records.length; start += batchSize) {
@@ -41,49 +42,62 @@ export async function processPaymentLinks(
       console.log(
         `Processing batch: rows ${start + 1} to ${start + batch.length}`,
       );
-      for (let i = 0; i < batch.length; i++) {
-        const row = batch[i];
-        const rowNumber = start + i + 1;
-  
-        if (!row) {
-          failedRecords++;
-          continue;
-        }
-  
-        const validationError = validateCsvRow(row);
-  
-        if (validationError) {
-          await saveFailedRow(bulkJobId, rowNumber, row, validationError);
-          console.error(
-            `Validation failed for CSV row ${rowNumber}: ${validationError}`,
-          );
-          failedRecords++;
-          continue;
-        }
-  
-        try {
-          await prisma.paymentlink.create({
-            data: {
-              bulkJobId,
-              idempotencyKey: `${bulkJobId}-row-${rowNumber}`,
-              customerName: row.customerName,
-              customerEmail: row.customerEmail,
-              amount: row.amount,
-              currency: row.currency,
-            },
-          });
-  
-          successfulRecords++;
-        } catch (error) {
-          const errorMessage =
-            error instanceof Error
-              ? error.message
-              : "Unknown payment-link processing error";
-  
-          console.error(`Failed to process CSV row ${rowNumber}:`, error);
-  
-          await saveFailedRow(bulkJobId, rowNumber, row, errorMessage);
-          failedRecords++;
+      for (let offset = 0; offset < batch.length; offset += concurrencyLimit) {
+        const concurrentRows = batch.slice(offset, offset + concurrencyLimit);
+
+        const results = await Promise.allSettled(
+          concurrentRows.map(async (row, index) => {
+            const rowNumber = start + offset + index + 1;
+
+            if (!row) {
+              failedRecords++;
+              return;
+            }
+
+            const validationError = validateCsvRow(row);
+
+            if (validationError) {
+              await saveFailedRow(bulkJobId, rowNumber, row, validationError);
+              console.error(
+                `Validation failed for CSV row ${rowNumber}: ${validationError}`,
+              );
+              failedRecords++;
+              return;
+            }
+
+            try {
+              await prisma.paymentlink.create({
+                data: {
+                  bulkJobId,
+                  idempotencyKey: `${bulkJobId}-row-${rowNumber}`,
+                  customerName: row.customerName,
+                  customerEmail: row.customerEmail,
+                  amount: row.amount,
+                  currency: row.currency,
+                },
+              });
+
+              successfulRecords++;
+            } catch (error) {
+              const errorMessage =
+                error instanceof Error
+                  ? error.message
+                  : "Unknown payment-link processing error";
+
+              console.error(`Failed to process CSV row ${rowNumber}:`, error);
+
+              await saveFailedRow(bulkJobId, rowNumber, row, errorMessage);
+              failedRecords++;
+            }
+          }),
+        );
+
+        const unexpectedFailure = results.find(
+          (result)=>result.status==='rejected'
+        )
+
+        if(unexpectedFailure){
+          throw unexpectedFailure.reason
         }
       }
     }

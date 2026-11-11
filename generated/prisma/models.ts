@@ -10,4 +10,5 @@
  */
 export type * from './models/BulkJob.js'
 export type * from './models/Paymentlink.js'
+export type * from './models/FailedPaymentLink.js'
 export type * from './commonInputTypes.js'

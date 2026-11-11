@@ -398,7 +398,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   BulkJob: 'BulkJob',
-  Paymentlink: 'Paymentlink'
+  Paymentlink: 'Paymentlink',
+  FailedPaymentLink: 'FailedPaymentLink'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -414,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "bulkJob" | "paymentlink"
+    modelProps: "bulkJob" | "paymentlink" | "failedPaymentLink"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -566,6 +567,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FailedPaymentLink: {
+      payload: Prisma.$FailedPaymentLinkPayload<ExtArgs>
+      fields: Prisma.FailedPaymentLinkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FailedPaymentLinkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FailedPaymentLinkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload>
+        }
+        findFirst: {
+          args: Prisma.FailedPaymentLinkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FailedPaymentLinkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload>
+        }
+        findMany: {
+          args: Prisma.FailedPaymentLinkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload>[]
+        }
+        create: {
+          args: Prisma.FailedPaymentLinkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload>
+        }
+        createMany: {
+          args: Prisma.FailedPaymentLinkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FailedPaymentLinkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload>[]
+        }
+        delete: {
+          args: Prisma.FailedPaymentLinkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload>
+        }
+        update: {
+          args: Prisma.FailedPaymentLinkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload>
+        }
+        deleteMany: {
+          args: Prisma.FailedPaymentLinkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FailedPaymentLinkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FailedPaymentLinkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload>[]
+        }
+        upsert: {
+          args: Prisma.FailedPaymentLinkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FailedPaymentLinkPayload>
+        }
+        aggregate: {
+          args: Prisma.FailedPaymentLinkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFailedPaymentLink>
+        }
+        groupBy: {
+          args: Prisma.FailedPaymentLinkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FailedPaymentLinkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FailedPaymentLinkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FailedPaymentLinkCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -638,12 +713,31 @@ export const PaymentlinkScalarFieldEnum = {
 export type PaymentlinkScalarFieldEnum = (typeof PaymentlinkScalarFieldEnum)[keyof typeof PaymentlinkScalarFieldEnum]
 
 
+export const FailedPaymentLinkScalarFieldEnum = {
+  id: 'id',
+  bulkJobId: 'bulkJobId',
+  rowNumber: 'rowNumber',
+  rowData: 'rowData',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt'
+} as const
+
+export type FailedPaymentLinkScalarFieldEnum = (typeof FailedPaymentLinkScalarFieldEnum)[keyof typeof FailedPaymentLinkScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -660,6 +754,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -749,6 +852,20 @@ export type EnumPaymentLinkStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'PaymentLinkStatus[]'
  */
 export type ListEnumPaymentLinkStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentLinkStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -918,6 +1035,7 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   bulkJob?: Prisma.BulkJobOmit
   paymentlink?: Prisma.PaymentlinkOmit
+  failedPaymentLink?: Prisma.FailedPaymentLinkOmit
 }
 
 /* Types for Logging */

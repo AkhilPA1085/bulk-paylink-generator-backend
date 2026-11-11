@@ -27,3 +27,8 @@ export type BulkJob = Prisma.BulkJobModel
  * 
  */
 export type Paymentlink = Prisma.PaymentlinkModel
+/**
+ * Model FailedPaymentLink
+ * 
+ */
+export type FailedPaymentLink = Prisma.FailedPaymentLinkModel
