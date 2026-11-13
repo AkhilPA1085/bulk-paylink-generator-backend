@@ -50,16 +50,27 @@ export async function processPaymentLinks(
             const rowNumber = start + offset + index + 1;
 
             if (!row) {
-              failedRecords++;
-              return;
+              throw new Error(`CSV row ${rowNumber} is missing`);
             }
 
             const validationError = validateCsvRow(row);
 
             if (validationError) {
-              await saveFailedRow(bulkJobId, rowNumber, row, validationError);
-              console.error(
-                `Validation failed for CSV row ${rowNumber}: ${validationError}`,
+              const saved = await saveFailedRow(
+                bulkJobId,
+                rowNumber,
+                row,
+                validationError,
+              );
+
+              if (!saved) {
+                throw new Error(
+                  `Could not save failure details for CSV row ${rowNumber}`,
+                );
+              }
+
+              console.log(
+                `Validation failed for CSV row ${rowNumber}:${validationError}`,
               );
               failedRecords++;
               return;
@@ -86,18 +97,33 @@ export async function processPaymentLinks(
 
               console.error(`Failed to process CSV row ${rowNumber}:`, error);
 
-              await saveFailedRow(bulkJobId, rowNumber, row, errorMessage);
+              const saved = await saveFailedRow(
+                bulkJobId,
+                rowNumber,
+                row,
+                errorMessage,
+              );
+
+              if (!saved) {
+                throw new Error(
+                  `Could not save failure details for CSV row ${rowNumber}`,
+                );
+              }
+
+              console.log(
+                `Payment link creation failed for CSV row ${rowNumber}. Failure details saved.`,
+              );
               failedRecords++;
             }
           }),
         );
 
         const unexpectedFailure = results.find(
-          (result)=>result.status==='rejected'
-        )
+          (result) => result.status === "rejected",
+        );
 
-        if(unexpectedFailure){
-          throw unexpectedFailure.reason
+        if (unexpectedFailure) {
+          throw unexpectedFailure.reason;
         }
       }
     }

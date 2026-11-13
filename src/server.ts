@@ -1,5 +1,7 @@
+import "dotenv/config";
 import express from "express";
 import prisma from "./lib/prisma.js";
+import "./config/redisConnection.js"
 
 import bulkPaymentLinkRoutes from "./routes/bulkjob.router.js";
 import paymentLinkRoutes from "./routes/paymentlink.router.js";
