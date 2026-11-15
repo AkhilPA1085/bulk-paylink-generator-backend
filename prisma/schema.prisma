@@ -57,6 +57,7 @@ model Paymentlink{
 
   status PaymentLinkStatus @default(PENDING)
 
+  paymentToken String? @unique
   paymentUrl String?
   errorMessage String?
 

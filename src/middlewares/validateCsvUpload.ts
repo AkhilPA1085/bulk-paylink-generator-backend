@@ -5,8 +5,8 @@ export function validateCsvUpload(
   res: Response,
   next: NextFunction,
 ) {
-
-  if (!req.body.merchantId.trim()) {
+  const merchantId = req.body.merchantId;
+  if (typeof merchantId !== "string" || !merchantId.trim()) {
     return res.status(400).json({
       error: true,
       message: "Merchant Id is required",

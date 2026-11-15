@@ -1,0 +1,4 @@
+customerName,customerEmail,amount,currency
+Alice Johnson,alice.johnson@example.com,500,INR
+Bob Wilson,bob.wilson@example.com,750,INR
+Charlie Brown,charlie.brown@example.com,1200,INR

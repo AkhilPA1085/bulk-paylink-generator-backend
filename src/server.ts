@@ -2,10 +2,13 @@ import "dotenv/config";
 import express from "express";
 import prisma from "./lib/prisma.js";
 import "./config/redisConnection.js"
+import "./workers/paymentlink.queue.worker.js";
 
 import bulkPaymentLinkRoutes from "./routes/bulkjob.router.js";
 import paymentLinkRoutes from "./routes/paymentlink.router.js";
 import csvUploadRoutes from "./routes/csvUpload.router.js";
+import publicPaymentRoutes from "./routes/publickPayment.router.js";
+
 
 const app = express();
 
@@ -40,6 +43,7 @@ app.get("/api/test-db", async (_req, res) => {
 app.use("/api/bulk-payment-links", bulkPaymentLinkRoutes);
 app.use("/api/payment-links", paymentLinkRoutes);
 app.use("/api/upload-csv", csvUploadRoutes);
+app.use("/pay", publicPaymentRoutes);
 
 const PORT = process.env.PORT || 8080;
 

@@ -1,16 +1,29 @@
 import { Router } from "express";
 import multer from "multer";
-import { parse } from "csv-parse/sync";
 import prisma from "../lib/prisma.js";
-import { processPaymentLinks } from "../workers/paymentlink.worker.js";
 import { validateCsvUpload } from "../middlewares/validateCsvUpload.js";
-import type { PaymentLinkCsvRow } from "../types/paymentLink.js";
+import { extname, join } from "node:path";
+import { mkdirSync } from "node:fs";
+import { randomUUID } from "node:crypto";
+import { paymentLinkQueue } from "../queues/paymentlink.queue.js";
 
 const router = Router();
-const upload = multer({
-  storage: multer?.memoryStorage(),
-});
+const uploadDir = join(process.cwd(), "uploads");
 
+// Create the upload directory if it doesn't exist.
+mkdirSync(uploadDir, { recursive: true });
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, callback) => {
+      callback(null, uploadDir);
+    },
+    filename: (req, file, callback) => {
+      const extension = extname(file.originalname).toLowerCase();
+      callback(null, `${randomUUID()}${extension}`);
+    },
+  }),
+});
 
 router.post("/", upload.single("file"), validateCsvUpload, async (req, res) => {
   try {
@@ -20,32 +33,37 @@ router.post("/", upload.single("file"), validateCsvUpload, async (req, res) => {
         message: "File is missing",
       });
     }
-    const merchantId = req.body.merchantId;
+    const merchantId = req.body.merchantId.trim();
 
-    const csvContent = req.file.buffer.toString("utf-8");
-
-    const records = parse<PaymentLinkCsvRow>(csvContent, {
-      columns: true,
-      skip_empty_lines: true,
-      trim: true,
-    });
-
+    // Step 1: Create a database record.
     const bulkJob = await prisma.bulkJob.create({
       data: {
         merchantId,
         fileName: req.file.originalname,
-        totalRecords: records.length,
-        status: "PROCESSING",
+        totalRecords: 0,
+        status: "UPLOADED",
       },
     });
 
-    void processPaymentLinks(bulkJob.id, records).catch((error) => {
-      console.error(`Unexpected worker error for job ${bulkJob.id}:`, error);
-    });
+    // Step 2: Add a processing job to BullMQ.
+    await paymentLinkQueue.add(
+      "process-payment-links",
+      {
+        bulkJobId: bulkJob.id,
+        filePath: req.file.path,
+      },
+      {
+        attempts: 3,
+        backoff: {
+          type: "exponential",
+          delay: 5000,
+        },
+      },
+    );
 
     return res.status(202).json({
       error: false,
-      message: "Bulk payment link processing started",
+      message: "Bulk payment link processing queued successfully",
       data: {
         jobId: bulkJob.id,
         status: bulkJob.status,

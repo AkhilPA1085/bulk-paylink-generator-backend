@@ -97,6 +97,7 @@ export const PaymentlinkScalarFieldEnum = {
   amount: 'amount',
   currency: 'currency',
   status: 'status',
+  paymentToken: 'paymentToken',
   paymentUrl: 'paymentUrl',
   errorMessage: 'errorMessage',
   createdAt: 'createdAt'

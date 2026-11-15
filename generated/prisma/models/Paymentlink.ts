@@ -43,6 +43,7 @@ export type PaymentlinkMinAggregateOutputType = {
   amount: runtime.Decimal | null
   currency: string | null
   status: $Enums.PaymentLinkStatus | null
+  paymentToken: string | null
   paymentUrl: string | null
   errorMessage: string | null
   createdAt: Date | null
@@ -57,6 +58,7 @@ export type PaymentlinkMaxAggregateOutputType = {
   amount: runtime.Decimal | null
   currency: string | null
   status: $Enums.PaymentLinkStatus | null
+  paymentToken: string | null
   paymentUrl: string | null
   errorMessage: string | null
   createdAt: Date | null
@@ -71,6 +73,7 @@ export type PaymentlinkCountAggregateOutputType = {
   amount: number
   currency: number
   status: number
+  paymentToken: number
   paymentUrl: number
   errorMessage: number
   createdAt: number
@@ -95,6 +98,7 @@ export type PaymentlinkMinAggregateInputType = {
   amount?: true
   currency?: true
   status?: true
+  paymentToken?: true
   paymentUrl?: true
   errorMessage?: true
   createdAt?: true
@@ -109,6 +113,7 @@ export type PaymentlinkMaxAggregateInputType = {
   amount?: true
   currency?: true
   status?: true
+  paymentToken?: true
   paymentUrl?: true
   errorMessage?: true
   createdAt?: true
@@ -123,6 +128,7 @@ export type PaymentlinkCountAggregateInputType = {
   amount?: true
   currency?: true
   status?: true
+  paymentToken?: true
   paymentUrl?: true
   errorMessage?: true
   createdAt?: true
@@ -224,6 +230,7 @@ export type PaymentlinkGroupByOutputType = {
   amount: runtime.Decimal
   currency: string
   status: $Enums.PaymentLinkStatus
+  paymentToken: string | null
   paymentUrl: string | null
   errorMessage: string | null
   createdAt: Date
@@ -261,6 +268,7 @@ export type PaymentlinkWhereInput = {
   amount?: Prisma.DecimalFilter<"Paymentlink"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Paymentlink"> | string
   status?: Prisma.EnumPaymentLinkStatusFilter<"Paymentlink"> | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.StringNullableFilter<"Paymentlink"> | string | null
   paymentUrl?: Prisma.StringNullableFilter<"Paymentlink"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"Paymentlink"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Paymentlink"> | Date | string
@@ -276,6 +284,7 @@ export type PaymentlinkOrderByWithRelationInput = {
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentToken?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -285,6 +294,7 @@ export type PaymentlinkOrderByWithRelationInput = {
 export type PaymentlinkWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   idempotencyKey?: string
+  paymentToken?: string
   AND?: Prisma.PaymentlinkWhereInput | Prisma.PaymentlinkWhereInput[]
   OR?: Prisma.PaymentlinkWhereInput[]
   NOT?: Prisma.PaymentlinkWhereInput | Prisma.PaymentlinkWhereInput[]
@@ -298,7 +308,7 @@ export type PaymentlinkWhereUniqueInput = Prisma.AtLeast<{
   errorMessage?: Prisma.StringNullableFilter<"Paymentlink"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Paymentlink"> | Date | string
   bulkJob?: Prisma.XOR<Prisma.BulkJobScalarRelationFilter, Prisma.BulkJobWhereInput>
-}, "id" | "idempotencyKey">
+}, "id" | "idempotencyKey" | "paymentToken">
 
 export type PaymentlinkOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -309,6 +319,7 @@ export type PaymentlinkOrderByWithAggregationInput = {
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentToken?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -331,6 +342,7 @@ export type PaymentlinkScalarWhereWithAggregatesInput = {
   amount?: Prisma.DecimalWithAggregatesFilter<"Paymentlink"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringWithAggregatesFilter<"Paymentlink"> | string
   status?: Prisma.EnumPaymentLinkStatusWithAggregatesFilter<"Paymentlink"> | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.StringNullableWithAggregatesFilter<"Paymentlink"> | string | null
   paymentUrl?: Prisma.StringNullableWithAggregatesFilter<"Paymentlink"> | string | null
   errorMessage?: Prisma.StringNullableWithAggregatesFilter<"Paymentlink"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Paymentlink"> | Date | string
@@ -344,6 +356,7 @@ export type PaymentlinkCreateInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: string
   status?: $Enums.PaymentLinkStatus
+  paymentToken?: string | null
   paymentUrl?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
@@ -359,6 +372,7 @@ export type PaymentlinkUncheckedCreateInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: string
   status?: $Enums.PaymentLinkStatus
+  paymentToken?: string | null
   paymentUrl?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
@@ -372,6 +386,7 @@ export type PaymentlinkUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -387,6 +402,7 @@ export type PaymentlinkUncheckedUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -401,6 +417,7 @@ export type PaymentlinkCreateManyInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: string
   status?: $Enums.PaymentLinkStatus
+  paymentToken?: string | null
   paymentUrl?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
@@ -414,6 +431,7 @@ export type PaymentlinkUpdateManyMutationInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -428,6 +446,7 @@ export type PaymentlinkUncheckedUpdateManyInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -452,6 +471,7 @@ export type PaymentlinkCountOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentToken?: Prisma.SortOrder
   paymentUrl?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -470,6 +490,7 @@ export type PaymentlinkMaxOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentToken?: Prisma.SortOrder
   paymentUrl?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -484,6 +505,7 @@ export type PaymentlinkMinOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentToken?: Prisma.SortOrder
   paymentUrl?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -559,6 +581,7 @@ export type PaymentlinkCreateWithoutBulkJobInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: string
   status?: $Enums.PaymentLinkStatus
+  paymentToken?: string | null
   paymentUrl?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
@@ -572,6 +595,7 @@ export type PaymentlinkUncheckedCreateWithoutBulkJobInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: string
   status?: $Enums.PaymentLinkStatus
+  paymentToken?: string | null
   paymentUrl?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
@@ -615,6 +639,7 @@ export type PaymentlinkScalarWhereInput = {
   amount?: Prisma.DecimalFilter<"Paymentlink"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Paymentlink"> | string
   status?: Prisma.EnumPaymentLinkStatusFilter<"Paymentlink"> | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.StringNullableFilter<"Paymentlink"> | string | null
   paymentUrl?: Prisma.StringNullableFilter<"Paymentlink"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"Paymentlink"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Paymentlink"> | Date | string
@@ -628,6 +653,7 @@ export type PaymentlinkCreateManyBulkJobInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: string
   status?: $Enums.PaymentLinkStatus
+  paymentToken?: string | null
   paymentUrl?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
@@ -641,6 +667,7 @@ export type PaymentlinkUpdateWithoutBulkJobInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -654,6 +681,7 @@ export type PaymentlinkUncheckedUpdateWithoutBulkJobInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -667,6 +695,7 @@ export type PaymentlinkUncheckedUpdateManyWithoutBulkJobInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -683,6 +712,7 @@ export type PaymentlinkSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   amount?: boolean
   currency?: boolean
   status?: boolean
+  paymentToken?: boolean
   paymentUrl?: boolean
   errorMessage?: boolean
   createdAt?: boolean
@@ -698,6 +728,7 @@ export type PaymentlinkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   amount?: boolean
   currency?: boolean
   status?: boolean
+  paymentToken?: boolean
   paymentUrl?: boolean
   errorMessage?: boolean
   createdAt?: boolean
@@ -713,6 +744,7 @@ export type PaymentlinkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   amount?: boolean
   currency?: boolean
   status?: boolean
+  paymentToken?: boolean
   paymentUrl?: boolean
   errorMessage?: boolean
   createdAt?: boolean
@@ -728,12 +760,13 @@ export type PaymentlinkSelectScalar = {
   amount?: boolean
   currency?: boolean
   status?: boolean
+  paymentToken?: boolean
   paymentUrl?: boolean
   errorMessage?: boolean
   createdAt?: boolean
 }
 
-export type PaymentlinkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bulkJobId" | "idempotencyKey" | "customerName" | "customerEmail" | "amount" | "currency" | "status" | "paymentUrl" | "errorMessage" | "createdAt", ExtArgs["result"]["paymentlink"]>
+export type PaymentlinkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bulkJobId" | "idempotencyKey" | "customerName" | "customerEmail" | "amount" | "currency" | "status" | "paymentToken" | "paymentUrl" | "errorMessage" | "createdAt", ExtArgs["result"]["paymentlink"]>
 export type PaymentlinkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bulkJob?: boolean | Prisma.BulkJobDefaultArgs<ExtArgs>
 }
@@ -758,6 +791,7 @@ export type $PaymentlinkPayload<ExtArgs extends runtime.Types.Extensions.Interna
     amount: runtime.Decimal
     currency: string
     status: $Enums.PaymentLinkStatus
+    paymentToken: string | null
     paymentUrl: string | null
     errorMessage: string | null
     createdAt: Date
@@ -1193,6 +1227,7 @@ export interface PaymentlinkFieldRefs {
   readonly amount: Prisma.FieldRef<"Paymentlink", 'Decimal'>
   readonly currency: Prisma.FieldRef<"Paymentlink", 'String'>
   readonly status: Prisma.FieldRef<"Paymentlink", 'PaymentLinkStatus'>
+  readonly paymentToken: Prisma.FieldRef<"Paymentlink", 'String'>
   readonly paymentUrl: Prisma.FieldRef<"Paymentlink", 'String'>
   readonly errorMessage: Prisma.FieldRef<"Paymentlink", 'String'>
   readonly createdAt: Prisma.FieldRef<"Paymentlink", 'DateTime'>

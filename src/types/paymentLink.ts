@@ -4,3 +4,19 @@ export type PaymentLinkCsvRow = {
   amount: string;
   currency: string;
 };
+
+export type PaylinkJobData ={
+  bulkJobId:string;
+  filePath:string
+}
+
+export type PaymentLinkBatchRow = PaymentLinkCsvRow & {
+  rowNumber: number;
+};
+
+
+export type FailePaylinkRow ={
+  rowNumber:number;
+  rowData:PaymentLinkCsvRow;
+  errorMessage:string;
+}
