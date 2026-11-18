@@ -32,3 +32,8 @@ export type Paymentlink = Prisma.PaymentlinkModel
  * 
  */
 export type FailedPaymentLink = Prisma.FailedPaymentLinkModel
+/**
+ * Model PaymentTransaction
+ * 
+ */
+export type PaymentTransaction = Prisma.PaymentTransactionModel

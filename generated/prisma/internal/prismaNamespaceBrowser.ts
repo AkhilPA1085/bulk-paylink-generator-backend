@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   BulkJob: 'BulkJob',
   Paymentlink: 'Paymentlink',
-  FailedPaymentLink: 'FailedPaymentLink'
+  FailedPaymentLink: 'FailedPaymentLink',
+  PaymentTransaction: 'PaymentTransaction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -116,6 +117,21 @@ export const FailedPaymentLinkScalarFieldEnum = {
 } as const
 
 export type FailedPaymentLinkScalarFieldEnum = (typeof FailedPaymentLinkScalarFieldEnum)[keyof typeof FailedPaymentLinkScalarFieldEnum]
+
+
+export const PaymentTransactionScalarFieldEnum = {
+  id: 'id',
+  paymentLinkId: 'paymentLinkId',
+  transactionId: 'transactionId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  paymentMethod: 'paymentMethod',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentTransactionScalarFieldEnum = (typeof PaymentTransactionScalarFieldEnum)[keyof typeof PaymentTransactionScalarFieldEnum]
 
 
 export const SortOrder = {

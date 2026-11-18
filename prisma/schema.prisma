@@ -65,6 +65,8 @@ model Paymentlink{
 
   bulkJob BulkJob @relation(fields: [bulkJobId], references: [id], onDelete: Cascade)
 
+  transactions PaymentTransaction[]
+
   @@index([bulkJobId])
   @@index([status])
 }
@@ -77,8 +79,37 @@ model FailedPaymentLink{
   errorMessage String
   createdAt DateTime @default(now())
 
-  bulkJob BulkJob @relation(fields:[bulkJobId], references:[id], onDelete:Cascade)
+  bulkJob BulkJob @relation(fields: [bulkJobId], references: [id], onDelete: Cascade)
 
   @@unique([bulkJobId, rowNumber])
   @@index([bulkJobId])
+}
+
+enum TransactionStatus {
+  INITIATED
+  SUCCESS
+  FAILED
+}
+
+model PaymentTransaction{
+  id String @id @default(cuid())
+
+  paymentLinkId String
+
+  transactionId String @unique
+
+  amount Decimal @db.Decimal(18,2)
+  currency String @db.VarChar(3)
+
+  status TransactionStatus @default(INITIATED)
+
+  paymentMethod String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  paymentLink Paymentlink @relation(fields: [paymentLinkId], references: [id], onDelete: Cascade)
+
+  @@index([paymentLinkId])
+  @@index([status])
 }

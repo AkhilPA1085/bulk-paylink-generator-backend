@@ -273,6 +273,7 @@ export type PaymentlinkWhereInput = {
   errorMessage?: Prisma.StringNullableFilter<"Paymentlink"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Paymentlink"> | Date | string
   bulkJob?: Prisma.XOR<Prisma.BulkJobScalarRelationFilter, Prisma.BulkJobWhereInput>
+  transactions?: Prisma.PaymentTransactionListRelationFilter
 }
 
 export type PaymentlinkOrderByWithRelationInput = {
@@ -289,6 +290,7 @@ export type PaymentlinkOrderByWithRelationInput = {
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   bulkJob?: Prisma.BulkJobOrderByWithRelationInput
+  transactions?: Prisma.PaymentTransactionOrderByRelationAggregateInput
 }
 
 export type PaymentlinkWhereUniqueInput = Prisma.AtLeast<{
@@ -308,6 +310,7 @@ export type PaymentlinkWhereUniqueInput = Prisma.AtLeast<{
   errorMessage?: Prisma.StringNullableFilter<"Paymentlink"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Paymentlink"> | Date | string
   bulkJob?: Prisma.XOR<Prisma.BulkJobScalarRelationFilter, Prisma.BulkJobWhereInput>
+  transactions?: Prisma.PaymentTransactionListRelationFilter
 }, "id" | "idempotencyKey" | "paymentToken">
 
 export type PaymentlinkOrderByWithAggregationInput = {
@@ -361,6 +364,7 @@ export type PaymentlinkCreateInput = {
   errorMessage?: string | null
   createdAt?: Date | string
   bulkJob: Prisma.BulkJobCreateNestedOneWithoutPaymentlinksInput
+  transactions?: Prisma.PaymentTransactionCreateNestedManyWithoutPaymentLinkInput
 }
 
 export type PaymentlinkUncheckedCreateInput = {
@@ -376,6 +380,7 @@ export type PaymentlinkUncheckedCreateInput = {
   paymentUrl?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
+  transactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutPaymentLinkInput
 }
 
 export type PaymentlinkUpdateInput = {
@@ -391,6 +396,7 @@ export type PaymentlinkUpdateInput = {
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bulkJob?: Prisma.BulkJobUpdateOneRequiredWithoutPaymentlinksNestedInput
+  transactions?: Prisma.PaymentTransactionUpdateManyWithoutPaymentLinkNestedInput
 }
 
 export type PaymentlinkUncheckedUpdateInput = {
@@ -406,6 +412,7 @@ export type PaymentlinkUncheckedUpdateInput = {
   paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  transactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutPaymentLinkNestedInput
 }
 
 export type PaymentlinkCreateManyInput = {
@@ -515,6 +522,11 @@ export type PaymentlinkSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
 }
 
+export type PaymentlinkScalarRelationFilter = {
+  is?: Prisma.PaymentlinkWhereInput
+  isNot?: Prisma.PaymentlinkWhereInput
+}
+
 export type PaymentlinkCreateNestedManyWithoutBulkJobInput = {
   create?: Prisma.XOR<Prisma.PaymentlinkCreateWithoutBulkJobInput, Prisma.PaymentlinkUncheckedCreateWithoutBulkJobInput> | Prisma.PaymentlinkCreateWithoutBulkJobInput[] | Prisma.PaymentlinkUncheckedCreateWithoutBulkJobInput[]
   connectOrCreate?: Prisma.PaymentlinkCreateOrConnectWithoutBulkJobInput | Prisma.PaymentlinkCreateOrConnectWithoutBulkJobInput[]
@@ -573,6 +585,20 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type PaymentlinkCreateNestedOneWithoutTransactionsInput = {
+  create?: Prisma.XOR<Prisma.PaymentlinkCreateWithoutTransactionsInput, Prisma.PaymentlinkUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.PaymentlinkCreateOrConnectWithoutTransactionsInput
+  connect?: Prisma.PaymentlinkWhereUniqueInput
+}
+
+export type PaymentlinkUpdateOneRequiredWithoutTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentlinkCreateWithoutTransactionsInput, Prisma.PaymentlinkUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.PaymentlinkCreateOrConnectWithoutTransactionsInput
+  upsert?: Prisma.PaymentlinkUpsertWithoutTransactionsInput
+  connect?: Prisma.PaymentlinkWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PaymentlinkUpdateToOneWithWhereWithoutTransactionsInput, Prisma.PaymentlinkUpdateWithoutTransactionsInput>, Prisma.PaymentlinkUncheckedUpdateWithoutTransactionsInput>
+}
+
 export type PaymentlinkCreateWithoutBulkJobInput = {
   id?: string
   idempotencyKey: string
@@ -585,6 +611,7 @@ export type PaymentlinkCreateWithoutBulkJobInput = {
   paymentUrl?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
+  transactions?: Prisma.PaymentTransactionCreateNestedManyWithoutPaymentLinkInput
 }
 
 export type PaymentlinkUncheckedCreateWithoutBulkJobInput = {
@@ -599,6 +626,7 @@ export type PaymentlinkUncheckedCreateWithoutBulkJobInput = {
   paymentUrl?: string | null
   errorMessage?: string | null
   createdAt?: Date | string
+  transactions?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutPaymentLinkInput
 }
 
 export type PaymentlinkCreateOrConnectWithoutBulkJobInput = {
@@ -645,6 +673,82 @@ export type PaymentlinkScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Paymentlink"> | Date | string
 }
 
+export type PaymentlinkCreateWithoutTransactionsInput = {
+  id?: string
+  idempotencyKey: string
+  customerName: string
+  customerEmail: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: string
+  status?: $Enums.PaymentLinkStatus
+  paymentToken?: string | null
+  paymentUrl?: string | null
+  errorMessage?: string | null
+  createdAt?: Date | string
+  bulkJob: Prisma.BulkJobCreateNestedOneWithoutPaymentlinksInput
+}
+
+export type PaymentlinkUncheckedCreateWithoutTransactionsInput = {
+  id?: string
+  bulkJobId: string
+  idempotencyKey: string
+  customerName: string
+  customerEmail: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: string
+  status?: $Enums.PaymentLinkStatus
+  paymentToken?: string | null
+  paymentUrl?: string | null
+  errorMessage?: string | null
+  createdAt?: Date | string
+}
+
+export type PaymentlinkCreateOrConnectWithoutTransactionsInput = {
+  where: Prisma.PaymentlinkWhereUniqueInput
+  create: Prisma.XOR<Prisma.PaymentlinkCreateWithoutTransactionsInput, Prisma.PaymentlinkUncheckedCreateWithoutTransactionsInput>
+}
+
+export type PaymentlinkUpsertWithoutTransactionsInput = {
+  update: Prisma.XOR<Prisma.PaymentlinkUpdateWithoutTransactionsInput, Prisma.PaymentlinkUncheckedUpdateWithoutTransactionsInput>
+  create: Prisma.XOR<Prisma.PaymentlinkCreateWithoutTransactionsInput, Prisma.PaymentlinkUncheckedCreateWithoutTransactionsInput>
+  where?: Prisma.PaymentlinkWhereInput
+}
+
+export type PaymentlinkUpdateToOneWithWhereWithoutTransactionsInput = {
+  where?: Prisma.PaymentlinkWhereInput
+  data: Prisma.XOR<Prisma.PaymentlinkUpdateWithoutTransactionsInput, Prisma.PaymentlinkUncheckedUpdateWithoutTransactionsInput>
+}
+
+export type PaymentlinkUpdateWithoutTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bulkJob?: Prisma.BulkJobUpdateOneRequiredWithoutPaymentlinksNestedInput
+}
+
+export type PaymentlinkUncheckedUpdateWithoutTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  bulkJobId?: Prisma.StringFieldUpdateOperationsInput | string
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  customerName?: Prisma.StringFieldUpdateOperationsInput | string
+  customerEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+  paymentToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type PaymentlinkCreateManyBulkJobInput = {
   id?: string
   idempotencyKey: string
@@ -671,6 +775,7 @@ export type PaymentlinkUpdateWithoutBulkJobInput = {
   paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  transactions?: Prisma.PaymentTransactionUpdateManyWithoutPaymentLinkNestedInput
 }
 
 export type PaymentlinkUncheckedUpdateWithoutBulkJobInput = {
@@ -685,6 +790,7 @@ export type PaymentlinkUncheckedUpdateWithoutBulkJobInput = {
   paymentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  transactions?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutPaymentLinkNestedInput
 }
 
 export type PaymentlinkUncheckedUpdateManyWithoutBulkJobInput = {
@@ -702,6 +808,35 @@ export type PaymentlinkUncheckedUpdateManyWithoutBulkJobInput = {
 }
 
 
+/**
+ * Count Type PaymentlinkCountOutputType
+ */
+
+export type PaymentlinkCountOutputType = {
+  transactions: number
+}
+
+export type PaymentlinkCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  transactions?: boolean | PaymentlinkCountOutputTypeCountTransactionsArgs
+}
+
+/**
+ * PaymentlinkCountOutputType without action
+ */
+export type PaymentlinkCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PaymentlinkCountOutputType
+   */
+  select?: Prisma.PaymentlinkCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PaymentlinkCountOutputType without action
+ */
+export type PaymentlinkCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentTransactionWhereInput
+}
+
 
 export type PaymentlinkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -717,6 +852,8 @@ export type PaymentlinkSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   errorMessage?: boolean
   createdAt?: boolean
   bulkJob?: boolean | Prisma.BulkJobDefaultArgs<ExtArgs>
+  transactions?: boolean | Prisma.Paymentlink$transactionsArgs<ExtArgs>
+  _count?: boolean | Prisma.PaymentlinkCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["paymentlink"]>
 
 export type PaymentlinkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -769,6 +906,8 @@ export type PaymentlinkSelectScalar = {
 export type PaymentlinkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bulkJobId" | "idempotencyKey" | "customerName" | "customerEmail" | "amount" | "currency" | "status" | "paymentToken" | "paymentUrl" | "errorMessage" | "createdAt", ExtArgs["result"]["paymentlink"]>
 export type PaymentlinkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bulkJob?: boolean | Prisma.BulkJobDefaultArgs<ExtArgs>
+  transactions?: boolean | Prisma.Paymentlink$transactionsArgs<ExtArgs>
+  _count?: boolean | Prisma.PaymentlinkCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PaymentlinkIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bulkJob?: boolean | Prisma.BulkJobDefaultArgs<ExtArgs>
@@ -781,6 +920,7 @@ export type $PaymentlinkPayload<ExtArgs extends runtime.Types.Extensions.Interna
   name: "Paymentlink"
   objects: {
     bulkJob: Prisma.$BulkJobPayload<ExtArgs>
+    transactions: Prisma.$PaymentTransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1190,6 +1330,7 @@ readonly fields: PaymentlinkFieldRefs;
 export interface Prisma__PaymentlinkClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   bulkJob<T extends Prisma.BulkJobDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BulkJobDefaultArgs<ExtArgs>>): Prisma.Prisma__BulkJobClient<runtime.Types.Result.GetResult<Prisma.$BulkJobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  transactions<T extends Prisma.Paymentlink$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Paymentlink$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1629,6 +1770,30 @@ export type PaymentlinkDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many Paymentlinks to delete.
    */
   limit?: number
+}
+
+/**
+ * Paymentlink.transactions
+ */
+export type Paymentlink$transactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PaymentTransaction
+   */
+  select?: Prisma.PaymentTransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PaymentTransaction
+   */
+  omit?: Prisma.PaymentTransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentTransactionInclude<ExtArgs> | null
+  where?: Prisma.PaymentTransactionWhereInput
+  orderBy?: Prisma.PaymentTransactionOrderByWithRelationInput | Prisma.PaymentTransactionOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentTransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentTransactionScalarFieldEnum | Prisma.PaymentTransactionScalarFieldEnum[]
 }
 
 /**
